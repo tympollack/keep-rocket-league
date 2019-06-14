@@ -1,4 +1,4 @@
-image: node:8.11.4
+image: node:latest
 
 cache:
   paths:
@@ -6,8 +6,20 @@ cache:
 
 stages:
   - test
+  - deploy
 
 test_install:
   stage: test
   script:
     - npm install
+
+deploy_firebase:
+  stage: deploy
+  environment: Production
+  only:
+    - master
+  script:
+    - npm i -g firebase-tools
+    - npm install
+    - firebase use --token $FIREBASE_KEY production
+    - firebase deploy -m 'Pipeline $CI_PIPELINE_ID, build $CI_BUILD_ID' --non-interactive --token $FIREBASE_KEY
