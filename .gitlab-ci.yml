@@ -22,4 +22,4 @@ deploy_firebase:
     - npm i -g firebase-tools
     - npm install
     - firebase use --token $FIREBASE_KEY production
-    - firebase deploy -m 'Pipeline $CI_PIPELINE_ID, build $CI_BUILD_ID' --non-interactive --token $FIREBASE_KEY
+    - firebase deploy -m "Pipeline $CI_PIPELINE_ID, build $CI_BUILD_ID" --non-interactive --token $FIREBASE_KEY
