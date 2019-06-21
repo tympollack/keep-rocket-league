@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@firebase/firestore": "^1.4.1",
-    "cors": "^2.8.5",
     "express": "^4.17.1",
     "firebase": "^6.2.1",
     "firebase-admin": "^8.2.0",

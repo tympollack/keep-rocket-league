@@ -2,7 +2,6 @@ const functions = require('firebase-functions')
 require('firebase/firestore')
 
 const express = require('express')
-const cors = require('cors')({ origin: true })
 const fetch = require('node-fetch')
 const passport = require('passport')
 const SteamStrategy = require('passport-steam').Strategy
@@ -77,33 +76,28 @@ app.use('/auth/steam/return', passportAuth, async (req, res) => {
     const steamId = steamIdUrl.substring(steamIdUrl.lastIndexOf('/') + 1)
     const collRef = db.collection('users')
     let displayName = ''
-    console.log(steamId)
 
-    // get display name
-    // cors(req, res, () => {
-        const url = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${steamKey}&steamids=${steamId}`
-        const params = {
-            method: 'GET',
-            mode: 'no-cors',
-            cache: 'no-cache',
-            credentials: 'same-origin',
-            headers: {
-                'Accept': '*/*',
-                'Content-Type': 'application/json'
-            }
+    const url = `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${steamKey}&steamids=${steamId}`
+    const params = {
+        method: 'GET',
+        mode: 'no-cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Accept': '*/*',
+            'Content-Type': 'application/json'
         }
+    }
 
-        console.log(url)
-        await fetch(url, params)
-            .then(async response => {
-                await response.json()
-                    .then(r => {
-                        const playerInfo = r.response.players[0]
-                        displayName = playerInfo.personaname
-                    })
-            })
-            .catch(e => { console.log('error fetching persona name', e) })
-    // })
+    await fetch(url, params)
+        .then(async response => {
+            await response.json()
+                .then(r => {
+                    const playerInfo = r.response.players[0]
+                    displayName = playerInfo.personaname
+                })
+        })
+        .catch(e => { console.log('error fetching persona name', e) })
 
     try {
         await collRef.doc(steamId).set({ displayName: displayName, steamId: steamId })
