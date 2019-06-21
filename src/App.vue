@@ -11,7 +11,7 @@
             <h1 class="white--text px-3 py-1 mb-2 display-1 text-xs-center" style="background-color:rgba(0,0,0,0.5);">
               Sign the Petition and Keep Rocket League on Steam!
             </h1>
-            <a href="#" style="width:250px">
+            <a href="/auth/steam/login" style="width:250px">
               <v-img :src="require('./assets/steam-sign-in-button.png')"></v-img>
             </a>
           </v-layout>
@@ -27,9 +27,10 @@
         >
           <v-flex xs12 sm4 class="my-3">
             <div class="text-xs-center">
-              <h2 class="headline">{{ numPlayers }} players have signed!</h2>
+              <h2 class="headline">More coming soon...</h2>
+              <!--<h2 class="headline">{{ numPlayers }} players have signed!</h2>-->
             </div>
-            <table-list></table-list>
+            <!--<table-list></table-list>-->
           </v-flex>
         </v-layout>
       </section>
